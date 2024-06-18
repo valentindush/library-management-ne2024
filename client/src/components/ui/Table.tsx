@@ -1,9 +1,10 @@
-import { Button, Checkbox, Input, Table, TableProps, TextInput } from '@mantine/core';
+import { Button, Table, TableProps } from '@mantine/core';
 import React, { useEffect } from 'react';
 import { GoPlus } from 'react-icons/go';
 import PaginationComponent from './Pagination';
 import { CellContext, Column, IPagination, RowContext, TableContext } from './types';
 import { getObjValue } from '../../utils/funcs';
+import { IconSearch } from '@tabler/icons-react';
 
 export interface DataTableProps {
    data: any[];
@@ -20,7 +21,7 @@ export interface DataTableProps {
    onPress?: () => void;
 }
 
-const DataTable = (props: DataTableProps) => {
+const DataTable = (props: DataTableProps) => { //table componet for displaying data
    const {
       data,
       columns,
@@ -96,20 +97,23 @@ const DataTable = (props: DataTableProps) => {
                      ) : (
                         buttonText
                      )}
-                     <input
-                        type="text"
-                        placeholder="Search books ..."
-                        className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                        value={globalFilter}
-                        onChange={(e) => setGlobalFilter(e.target.value)}
-                     />
+                     <div className="relative">
+                        <IconSearch className='absolute mt-[18px] ml-3' color='gray' />
+                        <input
+                           type="text"
+                           placeholder="Search books ..."
+                           className="w-full px-4 py-3 pl-12 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                           value={globalFilter}
+                           onChange={(e) => setGlobalFilter(e.target.value)}
+                        />
+                     </div>
                   </div>
                </div>
             ))}
          <div className="flex w-full pb-5 flex-col overflow-x-scroll">
             <Table stickyHeader style={{ minWidth: minWidth ?? '' }} className=" w-full" {...tableProps}>
                <Table.Thead>
-                  <Table.Tr  className='bg-gray-100 h-[50px]'>
+                  <Table.Tr className='bg-gray-100 h-[50px]'>
                      <Table.Th className=" w-6" align="center">
                         <input
                            type="checkbox"

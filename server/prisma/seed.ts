@@ -11,7 +11,7 @@ async function main() {
         studentId: "RCA00001",
         firstName: "ADMIN",
         lastName: "RCA_LMS",
-        email: "admin@lms.rca.rw",
+        email: process.env.ADMIN_USERNAME??"admin@lms.rca.rw",
         password: hashedPassword,
         role: Role.ADMIN
     }

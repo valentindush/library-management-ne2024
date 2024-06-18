@@ -12,8 +12,9 @@ const RegisterSchema = Yup.object().shape({
     lastName: Yup.string().min(3, 'Name is too short, atleastt 3 characters').max(50).required('requried'),
     email: Yup.string().email('Invalid email').required('Required'),
     password: Yup.string().min(8, 'Password must be atleast 8 characters').required('Required'),
-
-
+    confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), ""], 'Passwords must match')
+    .required('Confirm Password is required'),
 });
 
 interface RegisterValues {
@@ -22,18 +23,19 @@ interface RegisterValues {
     lastName: string,
     email: string;
     password: string;
+    confirmPassword: string;
 }
 
 export default function Register() {
     const { register } = useAuth();
     const [error, setError] = useState<string | null>(null);
-    const initialValues: RegisterValues = {studentId: '', firstName: '', lastName: '', email: '', password: '' };
+    const initialValues: RegisterValues = { studentId: '', firstName: '', lastName: '', email: '', password: '', confirmPassword: "" };
 
     const navigate = useNavigate();
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100 gap-4">
-            <div className="w-full max-w-md p-8 space-y-3 bg-white rounded-lg shadow-md">
+            <div className="w-full max-w-lg p-8 space-y-3 bg-white rounded-lg shadow-md">
                 <div className="flex items-center justify-center">
                     <img className='w-24' src="/logo.png" alt="" />
                 </div>
@@ -48,7 +50,7 @@ export default function Register() {
                         try {
                             await register(values.studentId, values.firstName, values.lastName, values.email, values.password);
                             toast.success('Registration successful');
-                            navigate('/');
+                            navigate('/books');
                         } catch (error: any) {
                             toast.error(error.message)
                             setError(error.message);
@@ -59,68 +61,80 @@ export default function Register() {
                 >
                     {({ isSubmitting }) => (
                         <Form className="space-y-6">
-                            <div>
-                                <label htmlFor="studentId" className="block text-sm font-medium text-gray-700">
-                                    Student ID
-                                </label>
-                                <Field
-                                    type="text"
-                                    name="studentId"
-                                    placeholder="Enter your ID"
-                                    className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                />
-                                <ErrorMessage name="studentId" component="div" className="text-sm text-red-600" />
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label htmlFor="studentId" className="block text-sm font-medium text-gray-700">
+                                        Student ID
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        name="studentId"
+                                        placeholder="Enter your ID"
+                                        className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                    <ErrorMessage name="studentId" component="div" className="text-sm text-red-600" />
+                                </div>
+                                <div>
+                                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+                                        First Name
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        name="firstName"
+                                        placeholder="Enter your first name"
+                                        className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                    <ErrorMessage name="firstName" component="div" className="text-sm text-red-600" />
+                                </div>
+                                <div>
+                                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+                                        last Name
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        name="lastName"
+                                        placeholder="Enter your first name"
+                                        className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                    <ErrorMessage name="lastName" component="div" className="text-sm text-red-600" />
+                                </div>
+                                <div>
+                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                                        Email
+                                    </label>
+                                    <Field
+                                        type="email"
+                                        name="email"
+                                        placeholder="Enter your email"
+                                        className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                    <ErrorMessage name="email" component="div" className="text-sm text-red-600" />
+                                </div>
+                                <div>
+                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                                        Password
+                                    </label>
+                                    <Field
+                                        type="password"
+                                        name="password"
+                                        placeholder="Enter your password"
+                                        className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                    <ErrorMessage name="password" component="div" className="text-sm text-red-600" />
+                                </div>
+                                <div>
+                                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                                        Confirm Password
+                                    </label>
+                                    <Field
+                                        type="password"
+                                        name="confirmPassword"
+                                        placeholder="Confirm your password"
+                                        className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                    <ErrorMessage name="confirmPassword" component="div" className="text-sm text-red-600" />
+                                </div>
                             </div>
-                            <div>
-                                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
-                                    First Name
-                                </label>
-                                <Field
-                                    type="text"
-                                    name="firstName"
-                                    placeholder="Enter your first name"
-                                    className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                />
-                                <ErrorMessage name="firstName" component="div" className="text-sm text-red-600" />
-                            </div>
-                            <div>
-                                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
-                                    last Name
-                                </label>
-                                <Field
-                                    type="text"
-                                    name="lastName"
-                                    placeholder="Enter your first name"
-                                    className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                />
-                                <ErrorMessage name="lastName" component="div" className="text-sm text-red-600" />
-                            </div>
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                    Email
-                                </label>
-                                <Field
-                                    type="email"
-                                    name="email"
-                                    placeholder="Enter your email"
-                                    className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                />
-                                <ErrorMessage name="email" component="div" className="text-sm text-red-600" />
-                            </div>
-
-                            <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                                    Password
-                                </label>
-                                <Field
-                                    type="password"
-                                    name="password"
-                                    placeholder="Enter your password"
-                                    className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                />
-                                <ErrorMessage name="password" component="div" className="text-sm text-red-600" />
-                            </div>
-
                             {error && <div className="text-sm text-red-600">{error}</div>}
 
                             <div>
@@ -132,10 +146,10 @@ export default function Register() {
                                     {isSubmitting ? (
                                         <>
                                             <FaSpinner className="w-5 h-5 mr-2 animate-spin" />
-                                            Registering...
+                                            Creatin account...
                                         </>
                                     ) : (
-                                        'Register'
+                                        'Create account'
                                     )}
                                 </button>
                                 <p className='text-sm mt-2 text-gray-700 text-center'>

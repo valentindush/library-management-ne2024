@@ -10,7 +10,7 @@ export default function Header() {
         <header className="flex justify-between p-4 shadow">
             <div className="flex items-center gap-2">
                  <div className="flex items-center justify-center">
-                    <img className='w-12' src="/logo.png" alt="" />
+                    <img className='w-8' src="/logo.png" alt="" />
                 </div>
                 <h2 className="font-bold text-2xl text-gray-700">RCA LMS</h2>
             </div>

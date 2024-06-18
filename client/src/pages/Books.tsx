@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import DataTable from '../components/ui/Table';
 import { Column } from '../components/ui/types';
-import { Button } from '@mantine/core';
-import { IconPlus } from '@tabler/icons-react';
 
 import axios from '../utils/axios.config';
 import toast from 'react-hot-toast';
+import { Book } from '../utils/types';
 
-interface Book {
-  id: number,
-  name: string
-  author: string
-  publisher: string
-  publicationYear: number
-  subject: string
-}
 
-const colums: Column[] = [
+const colums: Column[] = [ //column type [to display data in tables]
   { key: "id", header: "Id", sortable: true },
   { key: "name", header: "Book Name", sortable: true },
   { key: "authro", header: "Author", sortable: true },
@@ -34,8 +25,8 @@ const BooksPage: React.FC = () => {
   useEffect(()=>{
     axios.get('/book').then(({data}: {data: Book[]})=>{
       setBooks(data)
-      toast.success('Books loaded')
-    }).catch((err)=>{
+      // toast.success('Books loaded')
+    }).catch(()=>{
       toast.error("something went wrong while loading books")
     })
   }, [])
