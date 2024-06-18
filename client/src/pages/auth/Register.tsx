@@ -7,21 +7,27 @@ import toast, { Toaster } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 
 const RegisterSchema = Yup.object().shape({
+    studentId: Yup.string().min(8, 'StudentId must 8 characters').max(8, 'StudentId must 5 characters').required('required'),
+    firstName: Yup.string().min(3, 'Name is too short, atleastt 3 characters').max(50).required('requried'),
+    lastName: Yup.string().min(3, 'Name is too short, atleastt 3 characters').max(50).required('requried'),
     email: Yup.string().email('Invalid email').required('Required'),
-    password: Yup.string().min(6, 'Password too short').required('Required'),
-    role: Yup.string().oneOf(['ADMIN', 'USER']).required('Required'),
+    password: Yup.string().min(8, 'Password must be atleast 8 characters').required('Required'),
+
+
 });
 
 interface RegisterValues {
+    studentId: string,
+    firstName: string,
+    lastName: string,
     email: string;
     password: string;
-    role: 'ADMIN' | 'USER';
 }
 
 export default function Register() {
     const { register } = useAuth();
     const [error, setError] = useState<string | null>(null);
-    const initialValues: RegisterValues = {email: '', password: '', role: 'USER' };
+    const initialValues: RegisterValues = {studentId: '', firstName: '', lastName: '', email: '', password: '' };
 
     const navigate = useNavigate();
 
@@ -37,7 +43,7 @@ export default function Register() {
                     onSubmit={async (values, { setSubmitting }) => {
                         setError(null);
                         try {
-                            await register(values.email, values.password, values.role);
+                            await register(values.studentId, values.firstName, values.lastName, values.email, values.password);
                             toast.success('Registration successful');
                             navigate('/');
                         } catch (error: any) {
@@ -50,6 +56,42 @@ export default function Register() {
                 >
                     {({ isSubmitting }) => (
                         <Form className="space-y-6">
+                            <div>
+                                <label htmlFor="studentId" className="block text-sm font-medium text-gray-700">
+                                    Student ID
+                                </label>
+                                <Field
+                                    type="text"
+                                    name="studentId"
+                                    placeholder="Enter your ID"
+                                    className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                />
+                                <ErrorMessage name="studentId" component="div" className="text-sm text-red-600" />
+                            </div>
+                            <div>
+                                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+                                    First Name
+                                </label>
+                                <Field
+                                    type="text"
+                                    name="firstName"
+                                    placeholder="Enter your first name"
+                                    className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                />
+                                <ErrorMessage name="firstName" component="div" className="text-sm text-red-600" />
+                            </div>
+                            <div>
+                                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+                                    last Name
+                                </label>
+                                <Field
+                                    type="text"
+                                    name="lastName"
+                                    placeholder="Enter your first name"
+                                    className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                />
+                                <ErrorMessage name="lastName" component="div" className="text-sm text-red-600" />
+                            </div>
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                     Email
@@ -74,21 +116,6 @@ export default function Register() {
                                     className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                                 />
                                 <ErrorMessage name="password" component="div" className="text-sm text-red-600" />
-                            </div>
-
-                            <div>
-                                <label htmlFor="role" className="block text-sm font-medium text-gray-700">
-                                    Role
-                                </label>
-                                <Field
-                                    as="select"
-                                    name="role"
-                                    className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                >
-                                    <option value="USER">User</option>
-                                    <option value="ADMIN">Admin</option>
-                                </Field>
-                                <ErrorMessage name="role" component="div" className="text-sm text-red-600" />
                             </div>
 
                             {error && <div className="text-sm text-red-600">{error}</div>}

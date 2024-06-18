@@ -1,5 +1,9 @@
+
+//USER TYPE
 export interface User{
-    name: string,
-    email: string,
-    role: "ADMIN"|"USER"
+    studentId: string
+    firstName: string
+    lastName: String
+    email: string
+    role: "ADMIN"|"STUDENT"
 }

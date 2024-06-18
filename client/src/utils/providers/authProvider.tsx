@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 interface AuthContextType {
     user: User | null;
     login: (email: string, password: string) => Promise<void>;
-    register: (email: string, password: string, role: string) => Promise<void>;
+    register: (studentId: string, firstName: string, lastName: string, email: string, password: string) => Promise<void>;
     logout: () => void;
     isAuthenticated: boolean;
 }
@@ -59,9 +59,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     };
 
-    const register = async (email: string, password: string, role: string) => {
+    const register = async (studentId: string, firstName: string, lastName: string, email: string, password: string) => {
         try {
-            const response = await axios.post('/auth/register', { email, password, role });
+            const response = await axios.post('/auth/register', {studentId, firstName, lastName, email, password});
             const { accessToken } = response.data;
             localStorage.setItem('token', accessToken);
             const decodedUser = jwtDecode<User>(accessToken);

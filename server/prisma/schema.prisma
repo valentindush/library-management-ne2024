@@ -14,13 +14,25 @@ datasource db {
 }
 
 enum Role{
-  USER
+  STUDENT
   ADMIN
 }
 
 model User{
   id Int @default(autoincrement()) @id
+  studentId String @unique
+  firstName String
+  lastName String
   email String @unique
   password String
   role Role
+}
+
+model Book{
+  id Int @default(autoincrement()) @id
+  name String @unique
+  author String
+  publisher String
+  publicationYear Int
+  subject String
 }
