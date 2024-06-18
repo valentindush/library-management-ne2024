@@ -22,10 +22,13 @@ export default function Login() {
     const initialValues: LoginValues = { email: '', password: '' };
 
     const navigate = useNavigate()
-    
+
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 gap-4">
             <div className="w-full max-w-md p-8 space-y-3 bg-white rounded-lg shadow-md">
+                <div className="flex items-center justify-center">
+                    <img className='w-24' src="/logo.png" alt="" />
+                </div>
                 <h2 className="text-2xl font-semibold text-center text-gray-800">Welcome back</h2>
                 <p className='text-gray-800 text-center'>Enter your credentials to continue</p>
                 <p></p>
@@ -99,9 +102,9 @@ export default function Login() {
                 </Formik>
             </div>
             <Toaster
-            toastOptions={{
-                position: "top-center"
-            }}/>
+                toastOptions={{
+                    position: "top-center"
+                }} />
         </div>
     );
 }

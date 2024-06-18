@@ -15,4 +15,3 @@ export const getObjValue = <T = any>(key: string | number, obj: any) => {
     }
     return result as T;
  };
- 

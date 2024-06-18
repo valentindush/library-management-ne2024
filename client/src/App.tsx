@@ -6,6 +6,7 @@ import { AuthProvider } from './utils/providers/authProvider'
 import Register from './pages/auth/Register'
 import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css';
+import { Toaster } from 'react-hot-toast'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           </Routes>
         </AuthProvider>
       </Router>
+      <Toaster />
     </MantineProvider>
   )
 }

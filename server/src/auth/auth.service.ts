@@ -66,6 +66,6 @@ export class AuthService {
 
     //Generate a JWT token
     generateToken(payload: any){
-        return this.jwtService.sign({ id: payload.id, firstName: payload.firstName, lastName: payload.lastName, email: payload.email, role: payload.role });
+        return this.jwtService.sign({ id: payload.id, studentId: payload.studentId, firstName: payload.firstName, lastName: payload.lastName, email: payload.email, role: payload.role });
     }
 }

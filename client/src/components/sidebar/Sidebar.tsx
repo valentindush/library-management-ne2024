@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { Center, Tooltip, UnstyledButton, Stack, rem, Modal, Text, Group, Button } from '@mantine/core';
+import { Center, Tooltip, UnstyledButton, Stack, rem, Modal, Button } from '@mantine/core';
 import {
   IconHome2,
   IconLogout,
-  IconUsersGroup,
-  IconDevicesPc
+  IconBooks
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './styles.module.css';
@@ -34,8 +33,7 @@ function NavbarLink({ icon: Icon, label, active, onClick, to = "#", color = "tex
 }
 
 const mockdata = [
-  { icon: IconUsersGroup, label: 'Employees', to: "/employees" },
-  { icon: IconDevicesPc, label: 'Laptops', to: "/laptops" },
+  { icon: IconBooks, label: 'Books', to: "/Books" },
 ];
 
 export default function CustomSidebar() {

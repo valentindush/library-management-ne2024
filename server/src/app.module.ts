@@ -5,6 +5,10 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { BookModule } from './book/book.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './auth/roles.guard';
+import { PrismaService } from './prisma/prisma.service';
+import { AuthGuard } from './auth/auth.guard';
 
 @Module({
   imports: [
@@ -14,6 +18,9 @@ import { BookModule } from './book/book.module';
     BookModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    PrismaService
+  ],
 })
 export class AppModule { }

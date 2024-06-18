@@ -98,7 +98,7 @@ const DataTable = (props: DataTableProps) => {
                      )}
                      <input
                         type="text"
-                        placeholder="Search ..."
+                        placeholder="Search books ..."
                         className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         value={globalFilter}
                         onChange={(e) => setGlobalFilter(e.target.value)}
